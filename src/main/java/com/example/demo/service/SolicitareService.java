@@ -8,8 +8,10 @@ import com.example.demo.repository.AngajatRepository;
 import com.example.demo.repository.AnimalRepository;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.SolicitareRepository;
+import com.example.demo.singletonObserver.NotificationService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,13 +22,15 @@ public class SolicitareService {
     private final AnimalRepository animalRepository;
     private final AngajatRepository angajatRepository;
     private final SolicitareMapper mapper;
+    private final NotificationService notificationService;
 
-    public SolicitareService(SolicitareRepository solicitareRepository, ClientRepository clientRepository, AnimalRepository animalRepository, AngajatRepository angajatRepository, SolicitareMapper mapper) {
+    public SolicitareService(SolicitareRepository solicitareRepository, ClientRepository clientRepository, AnimalRepository animalRepository, AngajatRepository angajatRepository, SolicitareMapper mapper, NotificationService notificationService) {
         this.solicitareRepository = solicitareRepository;
         this.clientRepository = clientRepository;
         this.animalRepository = animalRepository;
         this.angajatRepository = angajatRepository;
         this.mapper = mapper;
+        this.notificationService = notificationService;
     }
 
     @PostConstruct
@@ -59,7 +63,7 @@ public class SolicitareService {
         solicitare.setAdresa(request.getAdresa());
         solicitare.setStadiu(StadiuSolicitareEnum.IN_ANALIZA);
         solicitare.setAngajat(new AngajatEntity( "Angajat 1", true));
-
+        notificationService.notifyAll("Noua solicitare de la clienti:"+solicitare.getClient().getNume());
         solicitareRepository.save(solicitare);
     }
 
@@ -95,6 +99,13 @@ public class SolicitareService {
     public void echipajPlecat(Long id) {
         SolicitareEntity solicitare = solicitareRepository.findById(id).orElseThrow();
         solicitare.setStadiu(StadiuSolicitareEnum.ECHIPAT_PLECAT_SPRE_CLIENT);
+        solicitareRepository.save(solicitare);
+    }
+    @Transactional
+    public void updateUrgenta(Long id, boolean urgenta) {
+        SolicitareEntity solicitare = solicitareRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Solicitare nu a fost găsită: " + id));
+        solicitare.seteUrgenta(urgenta);
         solicitareRepository.save(solicitare);
     }
 

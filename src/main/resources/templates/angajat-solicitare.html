@@ -58,7 +58,13 @@
         <td th:text="${solicitare.descriereProblema}"></td>
         <td th:text="${solicitare.adresa}"></td>
         <td th:text="${solicitare.stadiu}"></td>
-        <td th:text="${solicitare.urgenta}"></td>
+        <td>
+            <form th:action="@{/angajat/solicitari/urgenta}" method="post">
+                <input type="hidden" name="id" th:value="${solicitare.id}"/>
+                <input type="checkbox" name="urgenta" th:checked="${solicitare.urgenta}"/>
+                <button type="submit">Salvează</button>
+            </form>
+        </td>
         <td th:text="${solicitare.timpEstimatDeSosire}"></td>
     </tr>
     </tbody>
