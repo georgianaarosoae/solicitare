@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comenzi</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: auto;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        select {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center;">Lista Comenzi</h1>
+
+<!--<form method="get" style="text-align:center;">-->
+<!--    <label for="status">Filtrează după status:</label>-->
+<!--    <select name="status" id="status">-->
+<!--        <option value="">Toate</option>-->
+<!--        <option th:each="s : ${statuses}"-->
+<!--                th:value="${s}"-->
+<!--                th:text="${s}"-->
+<!--                th:selected="${s.name() == selectedStatus}"></option>-->
+<!--    </select>-->
+<!--    <button type="submit">Filtrează</button>-->
+<!--</form>-->
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>animal</th>
+        <th>descriereProblema</th>
+        <th>adresa</th>
+        <th>stadiu</th>
+        <th>urgenta</th>
+        <th>timpEstimatDeSosire</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="solicitare : ${solicitari}">
+        <td th:text="${solicitare.id}"></td>
+        <td th:text="${solicitare.client}"></td>
+        <td th:text="${solicitare.animal}"></td>
+        <td th:text="${solicitare.descriereProblema}"></td>
+        <td th:text="${solicitare.adresa}"></td>
+        <td th:text="${solicitare.stadiu}"></td>
+        <td th:text="${solicitare.urgenta}"></td>
+        <td th:text="${solicitare.timpEstimatDeSosire}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

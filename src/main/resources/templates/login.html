@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        button {
+            margin: 20px;
+            padding: 10px 30px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Login</h1>
+
+<form th:action="@{/client/solicitari}" method="get" style="display:inline-block;">
+    <button type="submit">Client</button>
+</form>
+
+<form th:action="@{/angajat/solicitari}" method="get" style="display:inline-block;">
+    <button type="submit">Angajat</button>
+</form>
+
+</body>
+</html>
